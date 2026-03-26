@@ -1,0 +1,44 @@
+package com.autobots.automanager.modelo;
+
+import java.util.List;
+
+import com.autobots.automanager.entidades.Documento;
+
+public class DocumentoAtualizador {
+
+    private StringVerificadorNulo verificador = new StringVerificadorNulo();
+
+    public void atualizar(Documento documento, Documento atualizacao) {
+        if (atualizacao != null) {
+
+            if (!verificador.verificar(atualizacao.getTipo())) {
+                documento.setTipo(atualizacao.getTipo());
+            }
+
+            if (!verificador.verificar(atualizacao.getNumero())) {
+                documento.setNumero(atualizacao.getNumero());
+            }
+        }
+    }
+
+    public void atualizar(List<Documento> documentos, List<Documento> atualizacoes) {
+
+        if (atualizacoes != null && documentos != null) {
+
+            for (Documento atualizacao : atualizacoes) {
+
+                if (atualizacao.getId() != null) {
+
+                    for (Documento documento : documentos) {
+
+                        if (documento.getId() != null &&
+                            atualizacao.getId().equals(documento.getId())) {
+
+                            atualizar(documento, atualizacao);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
